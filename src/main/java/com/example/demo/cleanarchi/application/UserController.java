@@ -1,6 +1,6 @@
 package com.example.demo.cleanarchi.application;
 
-import com.example.demo.cleanarchi.domain.usecases.inscription.InscrireUtilisateur;
+import com.example.demo.cleanarchi.domain.usecases.registration.RegisterUser;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/utilisateur")
-public class UtilisateurController {
+@RequestMapping("/user")
+public class UserController {
 
-    private final InscrireUtilisateur inscrireUtilisateur;
+    private final RegisterUser registerUser;
 
-    public UtilisateurController(InscrireUtilisateur inscrireUtilisateur) {
-        this.inscrireUtilisateur = inscrireUtilisateur;
+    public UserController(RegisterUser registerUser) {
+        this.registerUser = registerUser;
     }
 
-    @PostMapping("/inscription")
-    public ResponseEntity<Void> inscrireUtilisateur(@RequestBody UtilisateurRequest utilisateur) {
+    @PostMapping
+    public ResponseEntity<Void> registerUser(@RequestBody UserRequest userRequest) {
         try {
-            inscrireUtilisateur.executer(UtilisateurMapper.map(utilisateur));
+            registerUser.execute(UserMapper.map(userRequest));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
